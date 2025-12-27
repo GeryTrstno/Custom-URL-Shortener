@@ -11,7 +11,7 @@ class StoreLinkRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreLinkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'original_url' => 'required|url',
         ];
     }
 }
