@@ -1,10 +1,15 @@
-import { index } from '@/actions/App/Http/Controllers/DashboardController';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { link } from 'fs';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -17,10 +22,50 @@ export default function Dashboard({ links }: { links: any[] }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="">
-                <h1>My Shortened Links</h1>
+            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+                <h1 className="flex justify-center py-4 text-3xl">
+                    My Shortened Link
+                </h1>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>#</TableHead>
+                            <TableHead>Original Link</TableHead>
+                            <TableHead>Shortened Link</TableHead>
+                            <TableHead>Click Count</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        <TableRow>
+                            {links.length === 0 && (
+                                <TableCell
+                                    colSpan={4}
+                                    className="py-4 text-center text-xl"
+                                >
+                                    No Link Shortened yet.
+                                </TableCell>
+                            )}
+                        </TableRow>
+                        {links.map((link, index) => (
+                            <TableRow key={link.id}>
+                                <TableCell>{index + 1}</TableCell>
+                                <TableCell>{link.original_url}</TableCell>
+                                <TableCell>
+                                    <a
+                                        href={`/${link.short_code}`}
+                                        target="_blank"
+                                    >
+                                        {window.location.origin}/
+                                        {link.short_code}
+                                    </a>
+                                </TableCell>
+                                <TableCell>{link.click_count}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
 
-                <table>
+                {/* <table>
                     <thead>
                         <tr>
                             <th>#</th>
@@ -55,7 +100,7 @@ export default function Dashboard({ links }: { links: any[] }) {
                             </tr>
                         )}
                     </tbody>
-                </table>
+                </table> */}
             </div>
         </AppLayout>
     );
