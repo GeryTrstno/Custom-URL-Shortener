@@ -9,7 +9,8 @@ import {
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
+import links from '@/routes/links';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -18,7 +19,10 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Dashboard({ links }: { links: any[] }) {
+export default function Dashboard({ links: linkData }: { links: any[] }) {
+
+    const { delete: destroy } = useForm();
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -33,20 +37,21 @@ export default function Dashboard({ links }: { links: any[] }) {
                             <TableHead>Original Link</TableHead>
                             <TableHead>Shortened Link</TableHead>
                             <TableHead>Click Count</TableHead>
+                            <TableHead>Modify</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         <TableRow>
-                            {links.length === 0 && (
+                            {linkData.length === 0 && (
                                 <TableCell
-                                    colSpan={4}
+                                    colSpan={5}
                                     className="py-4 text-center text-xl"
                                 >
                                     No Link Shortened yet.
                                 </TableCell>
                             )}
                         </TableRow>
-                        {links.map((link, index) => (
+                        {linkData.map((link, index) => (
                             <TableRow key={link.id}>
                                 <TableCell>{index + 1}</TableCell>
                                 <TableCell>{link.original_url}</TableCell>
@@ -58,49 +63,48 @@ export default function Dashboard({ links }: { links: any[] }) {
                                         {window.location.origin}/
                                         {link.short_code}
                                     </a>
+
+                                    <button
+                                        onClick={() => {
+                                            const fullUrl = `${window.location.origin}/${link.short_code}`;
+                                            navigator.clipboard.writeText(
+                                                fullUrl,
+                                            );
+                                            alert(
+                                                'Link copied! (Nanti kita bikin toast notification biar keren)',
+                                            );
+                                        }}
+                                        className="text-gray-500 hover:text-white ml-2"
+                                        title="Copy to Clipboard"
+                                    >
+                                        📋
+                                    </button>
                                 </TableCell>
                                 <TableCell>{link.click_count}</TableCell>
+                                <TableCell>
+                                    <button
+                                        key={link.id}
+                                        onClick={() => {
+                                            if (confirm('Delete this link?')) {
+                                                destroy(
+                                                    links.destroy({
+                                                        link: link.id,
+                                                    }).url,
+                                                    {
+                                                        preserveScroll: true,
+                                                    },
+                                                );
+                                            }
+                                        }}
+                                        className="text-white hover:text-red-100 bg-red-600 px-4 py-2 rounded-md"
+                                    >
+                                        Delete
+                                    </button>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-
-                {/* <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Original URL</th>
-                            <th>Shortened URL</th>
-                            <th>Clicks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {links.length === 0 && (
-                            <tr>
-                                <td
-                                    colSpan={4}
-                                >
-                                    No Link Shortened yet.
-                                </td>
-                            </tr>
-                        )}
-
-                        {links.map((link, index) => 
-                            <tr key={link.id}>
-                                <td>{index + 1}</td>
-                                <td>{link.original_url}</td>
-                                <td><a
-                                        href={`/${link.short_code}`}
-                                        target="_blank"
-                                    >
-                                        {window.location.origin}/{link.short_code}
-                                    </a>
-                                </td>
-                                <td>{link.click_count}</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table> */}
             </div>
         </AppLayout>
     );

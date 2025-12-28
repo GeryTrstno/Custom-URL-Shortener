@@ -74,7 +74,12 @@ class LinkController extends Controller
      */
     public function destroy(Link $link)
     {
-        //
+
+        abort_if($link->user_id !== auth()->id(), 403);
+
+        $link->delete();
+
+        return back()->with('success', 'Link Deleted Successfully!');
     }
 
     public function shortenLink($code)
@@ -86,7 +91,7 @@ class LinkController extends Controller
         }
 
         $link->increment('click_count');
-        
+
         return redirect($link->original_url);
     }
 }
