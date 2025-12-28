@@ -34,10 +34,18 @@ class LinkController extends Controller
     {
         $validated = $request->validated();
 
+        if ($validated['custom_alias'] ?? false) {
+            $shortCode = $validated['custom_alias'];
+        } else {
+            do {
+                $shortCode = Str::random(6);
+            } while (Link::where('short_code', $shortCode)->exists());
+        }
+
         $link = Link::create([
             'user_id' => auth()->id(),
             'original_url' => $validated['original_url'],
-            'short_code' => Str::random(6),
+            'short_code' => $shortCode,
             'click_count' => 0
         ]);
 

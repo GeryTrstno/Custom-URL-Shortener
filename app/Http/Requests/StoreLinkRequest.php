@@ -23,6 +23,21 @@ class StoreLinkRequest extends FormRequest
     {
         return [
             'original_url' => 'required|url',
+            'custom_alias' => 'nullable|alpha_dash|string|unique:links,short_code|max:20'
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     */
+    public function messages(): array
+    {
+        return [
+            'original_url.required' => 'The original URL is required.',
+            'original_url.url' => 'The original URL must be a valid URL.',
+            'custom_alias.unique' => 'The custom alias has already been taken.',
+            'custom_alias.max' => 'The custom alias may not be greater than 20 characters.',
+            'custom_alias.alpha_dash' => 'The custom alias may only contain letters, numbers, dashes, and underscores.',
         ];
     }
 }

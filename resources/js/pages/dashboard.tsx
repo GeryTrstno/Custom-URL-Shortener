@@ -8,9 +8,12 @@ import {
 } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
+import links from '@/routes/links';
 import { type BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
-import links from '@/routes/links';
+import QRCode from "react-qr-code";
+import { useState } from 'react';
+
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,17 +23,16 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Dashboard({ links: linkData }: { links: any[] }) {
-
     const { delete: destroy } = useForm();
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <h1 className="flex justify-center py-4 text-3xl">
+            <div className="p-4">
+                <h1 className="flex justify-center py-4 text-2xl font-bold">
                     My Shortened Link
                 </h1>
-                <Table>
+                <Table className="mx-auto md:w-7xl">
                     <TableHeader>
                         <TableRow>
                             <TableHead>#</TableHead>
@@ -74,7 +76,7 @@ export default function Dashboard({ links: linkData }: { links: any[] }) {
                                                 'Link copied! (Nanti kita bikin toast notification biar keren)',
                                             );
                                         }}
-                                        className="text-gray-500 hover:text-white ml-2"
+                                        className="ml-2 text-gray-500 hover:text-white"
                                         title="Copy to Clipboard"
                                     >
                                         📋
@@ -96,7 +98,7 @@ export default function Dashboard({ links: linkData }: { links: any[] }) {
                                                 );
                                             }
                                         }}
-                                        className="text-white hover:text-red-100 bg-red-600 px-4 py-2 rounded-md"
+                                        className="rounded-md bg-red-600 px-4 py-2 text-white hover:text-red-100"
                                     >
                                         Delete
                                     </button>
