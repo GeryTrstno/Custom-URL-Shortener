@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import {
     Table,
     TableBody,
@@ -8,12 +9,10 @@ import {
 } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
-import links from '@/routes/links';
 import { type BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
-import QRCode from "react-qr-code";
 import { useState } from 'react';
-
+import QRCodeModal from '@/components/QRCodeModal';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -25,6 +24,19 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function Dashboard({ links: linkData }: { links: any[] }) {
     const { delete: destroy } = useForm();
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedLink, setSelectedLink] = useState('');
+
+    const handleOpenModal = (link: string) => {
+        setSelectedLink(link);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedLink('');
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -32,12 +44,13 @@ export default function Dashboard({ links: linkData }: { links: any[] }) {
                 <h1 className="flex justify-center py-4 text-2xl font-bold">
                     My Shortened Link
                 </h1>
-                <Table className="mx-auto md:w-7xl">
+                <Table className="mx-auto w-auto">
                     <TableHeader>
                         <TableRow>
                             <TableHead>#</TableHead>
                             <TableHead>Original Link</TableHead>
                             <TableHead>Shortened Link</TableHead>
+                            <TableHead>Generate QR Code</TableHead>
                             <TableHead>Click Count</TableHead>
                             <TableHead>Modify</TableHead>
                         </TableRow>
@@ -82,14 +95,27 @@ export default function Dashboard({ links: linkData }: { links: any[] }) {
                                         📋
                                     </button>
                                 </TableCell>
+                                <TableCell>
+                                    <Button
+                                        variant="secondary"
+                                        onClick={() =>
+                                            handleOpenModal(
+                                                `${window.location.origin}/${link.short_code}`,
+                                            )
+                                        }
+                                    >
+                                        Open QR Code
+                                    </Button>
+                                </TableCell>
                                 <TableCell>{link.click_count}</TableCell>
                                 <TableCell>
-                                    <button
+                                    <Button
+                                        variant="destructive"
                                         key={link.id}
                                         onClick={() => {
-                                            if (confirm('Delete this link?')) {
+                                            if (confirm('Delete this link ?')) {
                                                 destroy(
-                                                    links.destroy({
+                                                    link.destroy({
                                                         link: link.id,
                                                     }).url,
                                                     {
@@ -98,16 +124,22 @@ export default function Dashboard({ links: linkData }: { links: any[] }) {
                                                 );
                                             }
                                         }}
-                                        className="rounded-md bg-red-600 px-4 py-2 text-white hover:text-red-100"
                                     >
                                         Delete
-                                    </button>
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </div>
+            
+            <QRCodeModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                link={selectedLink}
+            />
+
         </AppLayout>
     );
 }
