@@ -138,23 +138,6 @@ Beberapa tantangan teknis yang diselesaikan dalam proyek ini:
 
 ---
 
-## 🤝 Contributing
-
-Kontribusi sangat terbuka! Jika kamu punya ide fitur baru:
-1.  Fork project ini.
-2.  Buat branch fitur baru (`git checkout -b fitur-keren`).
-3.  Commit perubahan kamu (`git commit -m 'Menambahkan fitur keren'`).
-4.  Push ke branch (`git push origin fitur-keren`).
-5.  Buat Pull Request.
-
----
-
-## 📝 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
 <p align="center">
   Built with ❤️ by <strong>Gery Tauristino</strong>
 </p>
