@@ -16,8 +16,8 @@ Proyek ini dibangun untuk mendemonstrasikan integrasi antara **Backend yang kuat
 * 📱 **QR Code Generator:** Otomatis membuat QR Code untuk kebutuhan cetak/digital.
 * 📊 **Click Analytics:** Pelacakan jumlah klik secara *real-time*.
 * ✏️ **Full Management:** Fitur Edit (ubah tujuan URL tanpa ganti link pendek) dan Delete.
-* 🔐 **Secure Authentication:** Sistem login/register yang aman menggunakan Laravel Breeze.
 * 🌙 **Modern UI:** Tampilan *Dark Mode* dengan desain *Glassmorphism*.
+<!-- * 🔐 **Secure Authentication:** Sistem login/register yang aman menggunakan Laravel Breeze. -->
 
 ---
 
@@ -26,9 +26,9 @@ Proyek ini dibangun untuk mendemonstrasikan integrasi antara **Backend yang kuat
 Project ini dibangun menggunakan teknologi modern standar industri:
 
 **Backend & Infrastructure:**
-* **Framework:** [Laravel 11](https://laravel.com)
+* **Framework:** [Laravel 12](https://laravel.com)
 * **Database:** PostgreSQL (Optimized for scale)
-* **Auth:** Laravel Breeze (Session based)
+<!-- * **Auth:** Laravel Breeze (Session based) -->
 
 **Frontend:**
 * **Core:** [React.js](https://reactjs.org/)
@@ -42,10 +42,9 @@ Project ini dibangun menggunakan teknologi modern standar industri:
 
 | Landing Page | Dashboard |
 |:---:|:---:|
-| ![Landing Page](LINK_GAMBAR_LANDING_PAGE_DISINI) | ![Dashboard](LINK_GAMBAR_DASHBOARD_DISINI) |
+| ![Landing Page](public/screenshots/landing-page.png) | ![Dashboard](public/screenshots/dashboard.png) |
 | *Halaman depan modern untuk konversi user* | *Manajemen link dengan fitur QR & Analytics* |
 
-> *Note: Ganti `LINK_GAMBAR_...` dengan path gambar kamu.*
 
 ---
 
@@ -63,8 +62,8 @@ Ikuti langkah ini untuk menjalankan proyek di komputer lokal kamu (Localhost).
 
 1.  **Clone Repository**
     ```bash
-    git clone [https://github.com/username/gery-shortener.git](https://github.com/username/gery-shortener.git)
-    cd gery-shortener
+    git clone [https://github.com/GeryTrstno/Custom-URL-Shortener](https://github.com/GeryTrstno/Custom-URL-Shortener.git)
+    cd Custom-URL-Shortener
     ```
 
 2.  **Install Dependencies**
@@ -103,6 +102,11 @@ Ikuti langkah ini untuk menjalankan proyek di komputer lokal kamu (Localhost).
     # Terminal 2 (Frontend)
     npm run dev
     ```
+    
+    atau gunakan:
+    ```bash
+    composer run dev
+    ```
 
 6.  **Selesai!** Buka browser dan akses `http://127.0.0.1:8000`
 
@@ -136,5 +140,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 <p align="center">
-  Built with ❤️ by <strong>Gery Trastuno</strong>
+  Built with ❤️ by <strong>Gery Tauristino</strong>
 </p>
