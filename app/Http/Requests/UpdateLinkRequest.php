@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateLinkRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateLinkRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -22,7 +23,25 @@ class UpdateLinkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'original_url' => 'required|url',
+            'custom_alias' => [
+                'nullable',
+                'alpha_dash',
+                'string',
+                'max:20',
+                Rule::unique('links', 'short_code')->ignore($this->link->id),
+            ],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'original_url.required' => 'The original URL is required.',
+            'original_url.url' => 'The original URL must be a valid URL.',
+            'custom_alias.unique' => 'The custom alias has already been taken.',
+            'custom_alias.max' => 'The custom alias may not be greater than 20 characters.',
+            'custom_alias.alpha_dash' => 'The custom alias may only contain letters, numbers, dashes, and underscores.',
         ];
     }
 }

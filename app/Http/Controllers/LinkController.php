@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLinkRequest;
 use App\Http\Requests\UpdateLinkRequest;
-use App\Models\Link;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use App\Models\Link;
+use Laravel\Fortify\Features;
 
 class LinkController extends Controller
 {
@@ -15,7 +16,24 @@ class LinkController extends Controller
      */
     public function index()
     {
-        return Inertia::render('shortener');
+        // KONDISI 1: Jika User SUDAH Login
+        if (auth()->check()) {
+            // Ambil data link milik user (Logic Dashboard dipindah ke sini)
+            $links = Link::where('user_id', auth()->id())
+                        ->latest()
+                        ->get();
+
+            // Tampilkan halaman App/Shortener (Gabungan Form + Tabel)
+            return Inertia::render('shortener', [
+                'links' => $links
+            ]);
+        }
+
+        // KONDISI 2: Jika User BELUM Login (Tamu)
+        // Tampilkan Landing Page (Welcome.tsx)
+        return Inertia::render('welcome', [
+            'canRegister' => Features::enabled(Features::registration()),
+        ]);
     }
 
     /**
@@ -32,6 +50,7 @@ class LinkController extends Controller
     // POST
     public function store(StoreLinkRequest $request)
     {
+
         $validated = $request->validated();
 
         if ($validated['custom_alias'] ?? false) {
@@ -74,7 +93,25 @@ class LinkController extends Controller
      */
     public function update(UpdateLinkRequest $request, Link $link)
     {
-        //
+        $validated = $request->validated();
+
+        abort_if($link->user_id !== auth()->id(), 403);
+
+        if ($validated['custom_alias'] ?? false) {
+            $shortCode = $validated['custom_alias'];
+        } else {
+            do {
+                $shortCode = Str::random(6);
+            } while (Link::where('short_code', $shortCode)->exists());
+        }
+
+        $link->update([
+            'original_url' => $validated['original_url'],
+            'short_code' => $shortCode,
+        ]);
+
+        return back()->with('success', 'Link Updated Successfully!')
+            ->with('short_link', url($link->short_code));
     }
 
     /**
