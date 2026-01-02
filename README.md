@@ -1,5 +1,8 @@
 # 🚀 GeryShortener - Modern SaaS URL Shortener
 
+![Status](https://img.shields.io/badge/Status-Active_Development-brightgreen?style=for-the-badge&logo=git)
+![Maintenance](https://img.shields.io/badge/Maintenance-Yes-blue?style=for-the-badge)
+
 ![Project Banner](public/images/banner.png) 
 > **Platform pemendek link canggih dengan fitur Analytics, QR Code Generator, dan Custom Alias.** > *Built with Laravel, React, and Modern Infrastructure standards.*
 
@@ -18,6 +21,19 @@ Proyek ini dibangun untuk mendemonstrasikan integrasi antara **Backend yang kuat
 * ✏️ **Full Management:** Fitur Edit (ubah tujuan URL tanpa ganti link pendek) dan Delete.
 * 🌙 **Modern UI:** Tampilan *Dark Mode* dengan desain *Glassmorphism*.
 <!-- * 🔐 **Secure Authentication:** Sistem login/register yang aman menggunakan Laravel Breeze. -->
+
+---
+
+## 🚧 Project Status & Roadmap
+
+Project ini masih dalam tahap **Active Development**. Fitur utama (MVP) sudah selesai, namun saya terus melakukan pembaruan untuk meningkatkan performa dan struktur kode.
+
+Current Focus:
+- [x] **Core Features:** Create, Read, Update, Delete (CRUD) Links.
+- [x] **Add-ons:** QR Code Generator & Click Counter.
+- [ ] **Refactoring:** Merapihkan struktur komponen React (Atom/Molecule pattern) agar lebih reusable.
+- [ ] **UI/UX Polish:** Menambahkan animasi transisi halaman dan Toast notifications.
+- [ ] **Deployment:** Setup CI/CD dan deploy ke server production (VPS/PaaS).
 
 ---
 
