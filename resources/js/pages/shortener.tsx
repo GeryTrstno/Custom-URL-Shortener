@@ -20,7 +20,8 @@ import {
 } from '@/components/ui/table';
 import { useState } from 'react';
 // Import Icon biar tabelnya ganteng
-import { Copy, ExternalLink, Pencil, QrCode, Trash2 } from 'lucide-react';
+import { Copy, Pencil, QrCode, Trash2 } from 'lucide-react';
+import DeleteConfirmationModal from '@/components/DeleteConfirmationModal';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -30,7 +31,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Shortener({ links: linkData }: { links: any[] }) {
-    // Note: Saya tambahkan prop 'links' di sini karena nanti kamu butuh untuk Tabel
+
 
     const { flash } = usePage().props as {
         flash?: {
@@ -56,7 +57,7 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
         });
     };
 
-    const { delete: destroy } = useForm();
+    const { delete: destroy, processing:isDeleting } = useForm();
 
     const [editingLink, setEditingLink] = useState<any | null>(null);
 
@@ -88,7 +89,7 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
 
         if (editingLink) {
             put(links.update({ link: editingLink.id }).url, {
-                onSuccess: () => setEditingLink(null), // Tutup modal kalau sukses
+                onSuccess: () => setEditingLink(null),
             });
         }
     };
@@ -104,6 +105,22 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setSelectedLink('');
+    };
+
+    const [linkToDelete, setLinkToDelete] = useState<any | null>(null);
+
+    const confirmDeleteLink = (link: any) => {
+        setLinkToDelete(link);
+    };
+
+    const handleDelete = () => {
+        if (linkToDelete) {
+            destroy(links.destroy({ link: linkToDelete.id }).url, {
+                preserveScroll: true,
+                onSuccess: () => setLinkToDelete(null),
+                onFinish: () => setLinkToDelete(null),
+            });
+        }
     };
 
     return (
@@ -229,18 +246,13 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
                                     className="text-gray-400 transition hover:text-white"
                                     title="Copy"
                                 >
-                                    📋
+                                    <Copy className="h-4 w-4" />
                                 </button>
                             </div>
                         </div>
                     )}
                 </div>
 
-                {/* --- TABLE SECTION (PLACEHOLDER) --- */}
-                {/* Jangan lupa paste kode Tabel kamu yang tadi di sini ya! 
-                    Biar user bisa lihat riwayat link mereka di bawah form ini.
-                */}
-                {/* --- TABLE SECTION --- */}
                 <div className="mt-12">
                     <Separator className="bg-gray-700 opacity-50" />
                 </div>
@@ -392,24 +404,11 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
                                                         variant="ghost"
                                                         size="icon"
                                                         className="h-8 w-8 rounded-full text-red-500 hover:bg-red-500/10 hover:text-red-400"
-                                                        onClick={() => {
-                                                            if (
-                                                                confirm(
-                                                                    'Delete this link permanently?',
-                                                                )
-                                                            ) {
-                                                                destroy(
-                                                                    links.destroy(
-                                                                        {
-                                                                            link: link.id,
-                                                                        },
-                                                                    ).url,
-                                                                    {
-                                                                        preserveScroll: true,
-                                                                    },
-                                                                );
-                                                            }
-                                                        }}
+                                                        onClick={() =>
+                                                            confirmDeleteLink(
+                                                                link,
+                                                            )
+                                                        } // Panggil function baru
                                                         title="Delete Link"
                                                     >
                                                         <Trash2 className="h-4 w-4" />
@@ -441,6 +440,13 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
                 processingEdit={processingEdit} // Status pengolahan form
                 errorsEdit={errorsEdit} // Error dari form edit
             />
+
+            <DeleteConfirmationModal
+                isOpen={linkToDelete !== null}
+                onClose={() => setLinkToDelete(null)}
+                onConfirm={handleDelete}
+                processing={isDeleting}
+            ></DeleteConfirmationModal>
         </AppLayout>
     );
 }

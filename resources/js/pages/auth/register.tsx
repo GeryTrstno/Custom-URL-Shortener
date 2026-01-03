@@ -12,7 +12,7 @@ import { Spinner } from '@/components/ui/spinner';
 
 export default function Register() {
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-900 px-4 py-12 sm:px-6 lg:px-8 selection:bg-indigo-500 selection:text-white relative overflow-hidden">
+        <div className="flex min-h-screen items-center justify-center bg-gray-900 px-4 py-12 sm:px-6 lg:px-8 selection:bg-violet-600 selection:text-white relative overflow-hidden">
             <Head title="Register" />
 
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -23,7 +23,7 @@ export default function Register() {
             <div className="w-full max-w-md space-y-8 relative z-10">
                 
                 <div className="text-center">
-                    <h2 className="mt-6 text-3xl font-extrabold tracking-tight">
+                    <h2 className="text-3xl font-extrabold tracking-tight">
                         <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                             Join GeryShortener
                         </span>
