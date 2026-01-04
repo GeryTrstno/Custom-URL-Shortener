@@ -6,6 +6,8 @@ import { BreadcrumbItem } from '@/types';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 import { Url } from 'url';
+import { toast } from 'sonner';
+import { useEffect } from 'react';
 
 import EditingLinkModal from '@/components/EditingLinkModal';
 import QRCodeModal from '@/components/QRCodeModal';
@@ -40,6 +42,17 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
             short_link?: Url;
         };
     };
+
+    useEffect(() => {
+        // Jika ada pesan sukses dari Laravel (misal setelah create/delete)
+        if (flash?.success) {
+            toast.success(flash.success);
+        }
+        // Jika ada error
+        if (flash?.error) {
+            toast.error(flash.error);
+        }
+    }, [flash]);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         original_url: '',
@@ -241,7 +254,7 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
                                         navigator.clipboard.writeText(
                                             flash.short_link!.toString(),
                                         );
-                                        alert('Copied!');
+                                        toast.success('Link copied to clipboard! 📋');
                                     }}
                                     className="text-gray-400 transition hover:text-white"
                                     title="Copy"
@@ -348,9 +361,7 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
                                                                 fullUrl,
                                                             );
                                                             // Ganti alert dengan toast nanti, sementara ini ok
-                                                            alert(
-                                                                'Link copied!',
-                                                            );
+                                                            toast.success('Link copied to clipboard! 📋');
                                                         }}
                                                         className="text-gray-500 transition-colors hover:text-white"
                                                         title="Copy Link"

@@ -8,13 +8,13 @@
 
 ## 📖 About The Project
 
-**GeryShortener** adalah aplikasi SaaS (*Software as a Service*) yang dirancang untuk mempermudah manajemen tautan. Tidak hanya sekedar memendekkan URL, aplikasi ini memberikan kontrol penuh kepada pengguna untuk melacak performa link mereka melalui dashboard interaktif.
+**GeryShortener** adalah aplikasi SaaS (*Software as a Service*) sederhana yang dirancang untuk mempermudah manajemen tautan. Tidak hanya sekedar memendekkan URL, aplikasi ini memberikan kontrol penuh kepada pengguna untuk melacak performa link mereka melalui dashboard interaktif.
 
-Proyek ini dibangun untuk mendemonstrasikan integrasi antara **Backend yang kuat (Laravel)** dan **Frontend yang reaktif (React via Inertia.js)**, dengan fokus pada *User Experience (UX)* dan *Database Efficiency*.
+Proyek ini dibangun untuk mendemonstrasikan integrasi antara **Backend Laravel** dan **Frontend React via Inertia.Js**, dengan fokus pada *User Experience (UX)* dan *Database Efficiency*.
 
 ### ✨ Key Features
 
-* 🔗 **Shorten URLs:** Generate link pendek acak (`gery.id/xYz12`) secara instan.
+* 🔗 **Shorten URLs:** Generate link pendek acak secara instan.
 * 🎨 **Custom Alias:** Personalisasi link kamu sendiri (contoh: `gery.id/my-portfolio`).
 * 📱 **QR Code Generator:** Otomatis membuat QR Code untuk kebutuhan cetak/digital.
 * 📊 **Click Analytics:** Pelacakan jumlah klik secara *real-time*.
@@ -78,7 +78,7 @@ Ikuti langkah ini untuk menjalankan proyek di komputer lokal kamu (Localhost).
 
 1.  **Clone Repository**
     ```bash
-    git clone [https://github.com/GeryTrstno/Custom-URL-Shortener](https://github.com/GeryTrstno/Custom-URL-Shortener.git)
+    git clone https://github.com/GeryTrstno/Custom-URL-Shortener.git
     cd Custom-URL-Shortener
     ```
 
