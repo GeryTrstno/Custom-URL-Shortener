@@ -11,9 +11,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Route::get('/shortener', [LinkController::class, 'index'])->name('shortener');
 
-    Route::post('/links', [LinkController::class, 'store'])->name('links.store');
-    Route::put('/links/{link}', [LinkController::class, 'update'])->name('links.update');
-    Route::delete('/links/{link}', [LinkController::class, 'destroy'])->name('links.destroy');
+    Route::post('/links', [LinkController::class, 'store'])->middleware('throttle:60,1')->name('links.store');
+    Route::put('/links/{link}', [LinkController::class, 'update'])->middleware('throttle:60,1')->name('links.update');
+    Route::delete('/links/{link}', [LinkController::class, 'destroy'])->middleware('throttle:60,1')->name('links.destroy');
 });
 
 Route::get('/{code}', [LinkController::class, 'shortenLink'])->name('links.redirect');
