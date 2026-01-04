@@ -31,8 +31,7 @@ Project ini masih dalam tahap **Active Development**. Fitur utama (MVP) sudah se
 Current Focus:
 - [x] **Core Features:** Create, Read, Update, Delete (CRUD) Links.
 - [x] **Add-ons:** QR Code Generator & Click Counter.
-- [ ] **Refactoring:** Merapihkan struktur komponen React (Atom/Molecule pattern) agar lebih reusable.
-- [ ] **UI/UX Polish:** Menambahkan animasi transisi halaman dan Toast notifications.
+- [x] **UI/UX Polish:** Menambahkan animasi transisi halaman dan Toast notifications.
 - [ ] **Deployment:** Setup CI/CD dan deploy ke server production (VPS/PaaS).
 
 ---
