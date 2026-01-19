@@ -10,10 +10,10 @@ type QRCodeModalProps = {
 };
 
 const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose, link }) => {
-    if (!isOpen) return null;
 
-    // Ref ke Wrapper DIV, bukan langsung ke komponen QRCode (lebih aman)
     const qrWrapperRef = useRef<HTMLDivElement | null>(null);
+
+    if (!isOpen) return null;
 
     const handleDownloadAsPNG = () => {
         if (qrWrapperRef.current) {

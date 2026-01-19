@@ -1,12 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { UserMenuContent } from '@/components/user-menu-content';
-import { useInitials } from '@/hooks/use-initials';
 import { login, logout, register } from '@/routes';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
@@ -17,7 +8,6 @@ export function AppHeader({}: {
 }) {
     const page = usePage<SharedData>();
     const { auth } = page.props;
-    const getInitials = useInitials();
     return (
         <>
             <nav className="border-b border-gray-800 bg-gray-900">
@@ -28,35 +18,10 @@ export function AppHeader({}: {
                         </div>
                         <div className="flex gap-4">
                             {auth.user ? (
-                                // <DropdownMenu>
-                                //     <DropdownMenuTrigger asChild>
-                                //         <Button
-                                //             variant="secondary"
-                                //             className="size-10 rounded-full p-1"
-                                //         >
-                                //             <Avatar className="size-8 overflow-hidden rounded-full">
-                                //                 <AvatarImage
-                                //                     src={auth.user.avatar}
-                                //                     alt={auth.user.name}
-                                //                 />
-                                //                 <AvatarFallback className="rounded-lg bg-white text-gray-900">
-                                //                     {getInitials(
-                                //                         auth.user.name,
-                                //                     )}
-                                //                 </AvatarFallback>
-                                //             </Avatar>
-                                //         </Button>
-                                //     </DropdownMenuTrigger>
-                                //     <DropdownMenuContent
-                                //         className="w-56"
-                                //         align="end"
-                                //     >
-                                //         <UserMenuContent user={auth.user} />
-                                //     </DropdownMenuContent>
-                                // </DropdownMenu>
-                               
-                                <Link href={logout()}
-                                    className="rounded-md bg-white px-4 py-2 font-semibold text-gray-900 transition hover:bg-gray-100">
+                                <Link
+                                    href={logout()}
+                                    className="rounded-md bg-white px-4 py-2 font-semibold text-gray-900 transition hover:bg-gray-100"
+                                >
                                     Log Out
                                 </Link>
                             ) : (

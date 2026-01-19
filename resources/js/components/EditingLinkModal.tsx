@@ -7,7 +7,7 @@ import { Label } from './ui/label'; // Pastikan kamu punya komponen Label (atau 
 type EditingLinkModalProps = {
     isOpen: boolean;
     onClose: () => void;
-    link: any;
+    link: string;
     editData: { original_url: string; custom_alias: string };
     setEditData: (key: string, value: string) => void;
     submitEdit: (e: React.FormEvent) => void;
@@ -18,7 +18,6 @@ type EditingLinkModalProps = {
 const EditingLinkModal: React.FC<EditingLinkModalProps> = ({
     isOpen,
     onClose,
-    link,
     editData,
     setEditData,
     submitEdit,

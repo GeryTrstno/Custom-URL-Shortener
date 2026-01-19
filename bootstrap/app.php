@@ -9,6 +9,8 @@ use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request; // Pastikan ini ada
 use Inertia\Inertia; // Pastikan ini ada
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -27,6 +29,10 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (\Throwable $e, Request $request) {
+
+            if ($e instanceof AuthenticationException || $e instanceof ValidationException) {
+                return null;
+            }
 
             // 1. Jika request ke API, biarkan default JSON response
             if ($request->is('api/*')) {
