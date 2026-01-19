@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from './ui/button';
-import { AlertTriangle, Trash2, X } from 'lucide-react'; // Import Icon
+import { AlertTriangle, Trash2} from 'lucide-react'; // Import Icon
 
 type DeleteConfirmationModalProps = {
     isOpen: boolean;

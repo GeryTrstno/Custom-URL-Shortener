@@ -2,7 +2,11 @@ import AppLayout from '@/layouts/app-layout';
 import { register } from '@/routes';
 import { Head, Link } from '@inertiajs/react';
 
-export default function Welcome({ auth }: { auth: any }) {
+export default function Welcome({
+    canRegister = true,
+}: {
+    canRegister?: boolean;
+}) {
     return (
         <AppLayout>
             <Head title="Shorten URLs Fast" />
@@ -28,7 +32,7 @@ export default function Welcome({ auth }: { auth: any }) {
                         placeholder="Paste your long URL here..."
                         className="flex-grow rounded-md border-none bg-gray-900 px-4 py-3 text-gray-400 focus:ring-0"
                     />
-                    {auth.user ? (
+                    {canRegister ? (
                         <Link
                             href={register()}
                             className="flex items-center justify-center rounded-md bg-indigo-600 px-6 py-3 font-bold whitespace-nowrap text-white transition hover:bg-indigo-500"
@@ -101,7 +105,6 @@ export default function Welcome({ auth }: { auth: any }) {
                     </div>
                 </div>
             </div>
-            
         </AppLayout>
     );
 }

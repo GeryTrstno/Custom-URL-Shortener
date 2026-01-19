@@ -25,6 +25,14 @@ import { useState } from 'react';
 import { Copy, Pencil, QrCode, Trash2 } from 'lucide-react';
 import DeleteConfirmationModal from '@/components/DeleteConfirmationModal';
 
+// Definisikan bentuk data Link sesuai database kamu
+interface LinkData {
+    id: number;
+    original_url: string;
+    short_code: string;
+    click_count: number;
+}
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'URL Shortener',
@@ -32,7 +40,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Shortener({ links: linkData }: { links: any[] }) {
+export default function Shortener({ links: linkData }: { links: LinkData[] }) {
 
 
     const { flash } = usePage().props as {
@@ -72,7 +80,7 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
 
     const { delete: destroy, processing:isDeleting } = useForm();
 
-    const [editingLink, setEditingLink] = useState<any | null>(null);
+    const [editingLink, setEditingLink] = useState<LinkData | null>(null);
 
     const {
         data: editData,
@@ -80,14 +88,13 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
         put, // Method PUT untuk update
         processing: processingEdit,
         errors: errorsEdit,
-        reset: resetEdit,
     } = useForm({
         original_url: '',
         custom_alias: '',
     });
 
     // Function saat tombol edit diklik
-    const openEditModal = (link: any) => {
+    const openEditModal = (link: LinkData) => {
         setEditingLink(link);
         // Isi form dengan data yang sudah ada
         setEditData({
@@ -120,9 +127,9 @@ export default function Shortener({ links: linkData }: { links: any[] }) {
         setSelectedLink('');
     };
 
-    const [linkToDelete, setLinkToDelete] = useState<any | null>(null);
+    const [linkToDelete, setLinkToDelete] = useState<LinkData | null>(null);
 
-    const confirmDeleteLink = (link: any) => {
+    const confirmDeleteLink = (link: LinkData) => {
         setLinkToDelete(link);
     };
 

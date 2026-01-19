@@ -1,11 +1,9 @@
 import { login, logout, register } from '@/routes';
-import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
+import { type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 
-export function AppHeader({}: {
-    navItems?: NavItem[];
-    breadcrumbs?: BreadcrumbItem[];
-}) {
+export function AppHeader() {
+
     const page = usePage<SharedData>();
     const { auth } = page.props;
     return (
